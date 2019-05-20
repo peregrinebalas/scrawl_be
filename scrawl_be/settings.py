@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'scrawl_be.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'scrawl_database'),
+        'NAME': 'scrawl_database',
         'USER': 'postgres',
         'PASSWORD': '',
         'HOST': '',
