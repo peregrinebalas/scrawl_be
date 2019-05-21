@@ -8,6 +8,11 @@ from .models import Wall, Comment
 
 class WallModelTests(TestCase):
 
+<<<<<<< HEAD
+=======
+class WallModelTests(TestCase):
+
+>>>>>>> 224b672bb8de6ee21981ffcdb8978a1ef4e9b325
     def test_it_exists(self):
         wall = Wall.objects.create(name='Wall', address='100 St.', lat=3.5, lng=3.5, range=3.5)
         all = Wall.objects.all()
