@@ -80,8 +80,6 @@ DATABASES = {
         'NAME': 'scrawl_database',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': '',
-        'PORT': '',
         'TEST': {
             'NAME': 'scrawl_test_db'
         }
