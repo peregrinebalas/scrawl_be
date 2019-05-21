@@ -6,14 +6,9 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-<<<<<<< HEAD
 requests = "*"
 django = "*"
 psycopg2-binary = "*"
-=======
-django = "*"
-psycopg2 = "*"
->>>>>>> 224b672bb8de6ee21981ffcdb8978a1ef4e9b325
 
 [requires]
 python_version = "3.7"
