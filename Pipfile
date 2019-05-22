@@ -9,6 +9,8 @@ verify_ssl = true
 requests = "*"
 django = "*"
 psycopg2-binary = "*"
+djangorestframework = "*"
+django-cors-headers = "*"
 
 [requires]
 python_version = "3.7"
