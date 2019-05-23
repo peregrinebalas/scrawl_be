@@ -40,13 +40,19 @@ class WallShowTests(APITestCase):
         self.comment_1 = Comment.objects.create(
             wall= self.turing, comment='Turing School is a place')
 
-    def test_it_can_get_a_specific_wall(self, **kwargs):
+    def test_it_can_get_a_specific_wall(self):
         url = reverse('scrawls:wall-show', kwargs={'pk': self.turing.pk})
         wall = Wall.objects.get(pk=self.turing.pk)
         serializer = WallsSerializer(wall)
         response = client.get(url, serializer.data, content_type='application/json')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer.data)
+
+    def test_it_cannot_get_a_specific_wall(self):
+        response = client.get(reverse('scrawls:wall-show', kwargs={'pk': 100}))
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.data['error'], "Could Not Find Wall")
+
 
 class ModelTests(TestCase):
 

@@ -35,5 +35,8 @@ class CreateWall(generics.CreateAPIView):
 class WallShow(generics.RetrieveAPIView):
 
     def get(self, request, **kwargs):
-        wall = Wall.objects.get(pk=kwargs['pk'])
-        return Response(data = WallsSerializer(wall).data, status=status.HTTP_200_OK)
+        try:
+            wall = Wall.objects.get(pk=kwargs['pk'])
+            return Response(data= WallsSerializer(wall).data, status=status.HTTP_200_OK)
+        except (KeyError, Wall.DoesNotExist):
+            return Response(data= {"error": "Could Not Find Wall"}, status=status.HTTP_404_NOT_FOUND)
