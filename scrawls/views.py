@@ -30,3 +30,10 @@ class CreateWall(generics.CreateAPIView):
         return Response(data={
             "message": msg
         }, status=status.HTTP_201_CREATED)
+
+
+class WallShow(generics.RetrieveAPIView):
+
+    def get(self, request, **kwargs):
+        wall = Wall.objects.get(pk=kwargs['pk'])
+        return Response(data = WallsSerializer(wall).data, status=status.HTTP_200_OK)

@@ -12,6 +12,10 @@ class Wall(models.Model):
     lng = models.FloatField()
     range = models.FloatField()
 
+    @property
+    def comments(self):
+        return self.comment_set.all()
+
     def __str__(self):
         return self.name
 

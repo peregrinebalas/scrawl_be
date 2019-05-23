@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.urls import reverse
 
 from rest_framework.test import APITestCase, APIClient
+from rest_framework.views import status
 
 from .models import Wall, Comment
 
@@ -27,6 +28,15 @@ class PostWallTests(APITestCase):
         response = client.post(url, data=data, content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data, {'message': 'Turing School of Software & Design can be found at 1331 17th Street, Denver, CO, USA.'})
+
+# class WallShowTests(APITestCase):
+#
+#     def test_it_can_get_a_specific_wall(self, **kwargs):
+#          # hit the API endpoint
+#         queryset = Wall.objects.get(id=kwargs['wall_id'])
+#         # fetch the data from db
+#         breakpoint()
+
 
 class ModelTests(TestCase):
 
