@@ -12,9 +12,3 @@ class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ("comment")
-
-
-
-# class WallCommentsSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Wall
