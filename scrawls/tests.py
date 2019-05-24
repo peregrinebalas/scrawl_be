@@ -19,23 +19,58 @@ class PostWallTests(APITestCase):
         url = reverse('scrawls:walls-create')
         data = json.dumps(
             {
-                'name': 'Turing School of Software & Design',
-                'address': '1331 17th Street, Denver, CO, USA',
+                'name': 'The Basement',
                 'lat': 25.3454567,
                 'lng': 90.1234567,
-                'range': 0.0101234
+                'comment': 'Learn to code!'
             }
         )
 
         response = client.post(url, data=data, content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data, {'message': 'Turing School of Software & Design can be found at 1331 17th Street, Denver, CO, USA.'})
+        self.assertEqual(response.data, {
+            'name': 'The Basement',
+            'lat': 25.3454567,
+            'lng': 90.1234567,
+            'comments': ['Learn to code!']
+        })
+
+    def test_a_wall_requires_all_fields_to_be_added(self):
+        url = reverse('scrawls:walls-create')
+        data1 = json.dumps(
+            {
+                'name': 'The Basement',
+                'lng': 90.1234567,
+            }
+        )
+        data2 = json.dumps(
+            {
+                'name': 'The Basement',
+                'lat': 25.3454567,
+            }
+        )
+        data3 = json.dumps(
+            {
+                'lat': 25.3454567,
+                'lng': 90.1234567,
+            }
+        )
+
+        response1 = client.post(url, data=data1, content_type='application/json')
+        self.assertEqual(response1.status_code, 409)
+        self.assertEqual(response1.data, {'error': 'Fields missing, could not save wall.'})
+        response2 = client.post(url, data=data2, content_type='application/json')
+        self.assertEqual(response2.status_code, 409)
+        self.assertEqual(response2.data, {'error': 'Fields missing, could not save wall.'})
+        response3 = client.post(url, data=data3, content_type='application/json')
+        self.assertEqual(response3.status_code, 409)
+        self.assertEqual(response3.data, {'error': 'Fields missing, could not save wall.'})
 
 class WallShowTests(APITestCase):
 
     def setUp(self):
         self.turing = Wall.objects.create(
-            name='Turing School of Software & Design', address='1331 17th Street, Denver, CO, USA', lat=25.3454567, lng=90.1234567, range=0.0101234)
+            name='Turing School of Software & Design', lat=25.3454567, lng=90.1234567)
 
         self.comment_1 = Comment.objects.create(
             wall= self.turing, comment='Turing School is a place')
@@ -57,6 +92,6 @@ class WallShowTests(APITestCase):
 class ModelTests(TestCase):
 
     def test_it_exists(self):
-        wall = Wall.objects.create(name='Wall', address='100 St.', lat=3.5, lng=3.5, range=3.5)
+        wall = Wall.objects.create(name='Wall', lat=3.5, lng=3.5)
         all = Wall.objects.all()
         self.assertIs(all.count(), 1)
