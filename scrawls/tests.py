@@ -88,16 +88,16 @@ class WallShowTests(APITestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.data['error'], "Could Not Find Wall")
 
-class PostCommentTests(APITestCase):
+class CreateCommentTests(APITestCase):
     def setUp(self):
         self.turing = Wall.objects.create(
             name='Turing School of Software & Design', lat=25.3454567, lng=90.1234567)
 
     def test_it_post_to_a_specific_wall(self):
-        url = reverse('scrawls:comment-post', kwargs={"comment": "Who is the Fish Monster?"})
+        url = reverse('scrawls:comments-create', kwargs={"comment": "Who is the Fish Monster?"})
         wall = Wall.objects.get(pk=self.turing.pk)
         serializer = WallsSerializer(wall)
-        response = client.post(url, serializer.data, content_type='application/json')
+        response = client.post(url, content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data, serializer.data)
 
