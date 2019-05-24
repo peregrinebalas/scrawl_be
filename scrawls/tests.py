@@ -93,13 +93,25 @@ class CreateCommentTests(APITestCase):
         self.turing = Wall.objects.create(
             name='Turing School of Software & Design', lat=25.3454567, lng=90.1234567)
 
+        self.comment_1 = Comment.objects.create(
+            wall= self.turing, comment='Turing School is a place')
+
+        self.body = {"comment": "There's a Fish Monster"}
+
     def test_it_post_to_a_specific_wall(self):
-        url = reverse('scrawls:comments-create', kwargs={"comment": "Who is the Fish Monster?"})
-        wall = Wall.objects.get(pk=self.turing.pk)
-        serializer = WallsSerializer(wall)
-        response = client.post(url, content_type='application/json')
+        url = reverse('scrawls:comments-create', kwargs={"pk": self.turing.pk})
+        response = client.post(url, self.body, content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data, serializer.data)
+        self.assertEqual(response.data.message, "Comment Saved!")
+
+    def test_it_cannot_post_to_a_specific_wall(test_a_wall_requires_all_fields_to_be_added):
+        url = reverse('scrawls:comments-create', kwargs={"pk": 100})
+        response = client.post(url, body, content_type='application/json')
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response.data.message, "Could Not Find Wall")
+
+
+
 
 class ModelTests(TestCase):
 
