@@ -7,10 +7,8 @@ def expiration_date():
 
 class Wall(models.Model):
     name = models.CharField(max_length=100)
-    address = models.CharField(max_length=200)
     lat = models.FloatField()
     lng = models.FloatField()
-    range = models.FloatField()
 
     @property
     def comments(self):
