@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase, APIClient, APIRequestFactory
 from rest_framework.views import status
 
 from .models import Wall, Comment
@@ -13,6 +13,7 @@ from .serializers import WallsSerializer
 
 
 client = APIClient()
+factory = APIRequestFactory()
 class PostWallTests(APITestCase):
 
     def test_a_wall_can_be_added(self):
@@ -98,17 +99,17 @@ class CreateCommentTests(APITestCase):
 
         self.body = {"comment": "There's a Fish Monster"}
 
-    def test_it_post_to_a_specific_wall(self):
+    def test_it_post_to_a_specific_wall(self, *args):
         url = reverse('scrawls:comments-create', kwargs={"pk": self.turing.pk})
-        response = client.post(url, self.body, content_type='application/json')
+        response = client.post(url, json.dumps(self.body), content_type='application/json')
         self.assertEqual(response.status_code, 201)
-        self.assertEqual(response.data.message, "Comment Saved!")
+        self.assertEqual(response.data['message'], "Comment Saved!")
 
-    def test_it_cannot_post_to_a_specific_wall(test_a_wall_requires_all_fields_to_be_added):
+    def test_it_cannot_post_to_a_specific_wall(self, *args):
         url = reverse('scrawls:comments-create', kwargs={"pk": 100})
-        response = client.post(url, body, content_type='application/json')
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.data.message, "Could Not Find Wall")
+        response = client.post(url, json.dumps(self.body), content_type='application/json')
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.data['error'], "Conflict!")
 
 
 
