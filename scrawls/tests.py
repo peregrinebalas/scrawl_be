@@ -100,14 +100,18 @@ class CreateCommentTests(APITestCase):
         self.body = {"comment": "There's a Fish Monster"}
 
     def test_it_post_to_a_specific_wall(self, *args):
+        self.assertEqual(self.turing.comment_set.count(), 1)
         url = reverse('scrawls:comments-create', kwargs={"pk": self.turing.pk})
         response = client.post(url, json.dumps(self.body), content_type='application/json')
+        self.assertEqual(self.turing.comment_set.count(), 2)
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data['message'], "Comment Saved!")
 
     def test_it_cannot_post_to_a_specific_wall(self, *args):
+        self.assertEqual(self.turing.comment_set.count(), 1)
         url = reverse('scrawls:comments-create', kwargs={"pk": 100})
         response = client.post(url, json.dumps(self.body), content_type='application/json')
+        self.assertEqual(self.turing.comment_set.count(), 1)
         self.assertEqual(response.status_code, 409)
         self.assertEqual(response.data['error'], "Conflict!")
 
