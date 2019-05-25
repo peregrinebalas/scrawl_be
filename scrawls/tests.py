@@ -120,7 +120,13 @@ class CreateCommentTests(APITestCase):
 
 class ModelTests(TestCase):
 
-    def test_it_exists(self):
+    def test_wall_exists(self):
         wall = Wall.objects.create(name='Wall', lat=3.5, lng=3.5)
         all = Wall.objects.all()
+        self.assertIs(all.count(), 1)
+
+    def test_comment_exists(self):
+        wall = Wall.objects.create(name='Wall', lat=3.5, lng=3.5)
+        comment = Comment.objects.create(wall=wall, comment='Comment')
+        all = Comment.objects.all()
         self.assertIs(all.count(), 1)
