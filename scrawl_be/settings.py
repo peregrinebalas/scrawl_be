@@ -124,7 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8000'
+    'http://localhost:8000',
+    'https://scrawlr.herokuapp.com'
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
