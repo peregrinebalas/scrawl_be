@@ -26,6 +26,8 @@ jobs: # A basic unit of work in a run
           command: |
             sudo pip install pipenv
             pipenv install
+            apt-get update && apt-get install -y \
+            gdal-bin python-gdal python3-gdal
       - save_cache: # cache Python dependencies using checksum of Pipfile as the cache-key
           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
           paths:
