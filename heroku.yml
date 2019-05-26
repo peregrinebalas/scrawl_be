@@ -1,0 +1,14 @@
+setup:
+  addons:
+    - plan: 'heroku-postgresql:hobby-dev'
+      as: DATABASE
+  config:
+    BUILDPACK_CLEAR_CACHE: '1'
+    DISABLE_COLLECTSTATIC: '1'
+build:
+  packages:
+    - gdal-bin
+  languages:
+    - 'https://github.com/dschep/heroku-geo-buildpack.git'
+    - python
+run: {}
