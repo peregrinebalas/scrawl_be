@@ -1,5 +1,6 @@
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils import timezone
+from django.contrib.gis.geos import Point
 # Create your models here.
 
 def expiration_date():
@@ -9,6 +10,11 @@ class Wall(models.Model):
     name = models.CharField(max_length=100)
     lat = models.FloatField()
     lng = models.FloatField()
+    point = models.PointField(blank = True, null=True, srid=4326)
+
+    def save(self, *args, **kwargs):
+        self.point = Point(self.lng, self.lat)
+        super(Wall, self).save(*args, **kwargs)
 
     @property
     def comments(self):
@@ -16,6 +22,7 @@ class Wall(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Comment(models.Model):
     wall = models.ForeignKey(Wall, on_delete=models.CASCADE)
