@@ -6,8 +6,6 @@ setup:
     BUILDPACK_CLEAR_CACHE: '1'
     DISABLE_COLLECTSTATIC: '1'
 build:
-  docker:
-    web: Dockerfile
   packages:
     - gdal-bin
   languages:
