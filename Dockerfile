@@ -3,7 +3,7 @@ FROM python:3
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ENV DJANGO_SETTINGS_MODULE=my_django_project.settings \
+ENV DJANGO_SETTINGS_MODULE=scrawl_be.settings \
     PYTHONPATH=/usr/src/app SECRET_KEY=1 DATABASE_URL=
 
 # download GeoIP database
@@ -17,13 +17,12 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # python packages
-COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r requirements.txt
+COPY Pipfile /usr/src/app/
+RUN pipenv install
 
 # django apps & manage
-COPY my_django_project /usr/src/app/my_django_project
-COPY my_django_app /usr/src/app/my_django_app
-COPY my_other_django_app /usr/src/app/my_other_django_app
+COPY scrawl_be /usr/src/app/scrawl_be
+COPY scrawls /usr/src/app/scrawls
 COPY manage.py /usr/src/app/manage.py
 
 RUN ./manage.py collectstatic --no-input
@@ -31,5 +30,5 @@ RUN ./manage.py collectstatic --no-input
 # Heroku doesn't like EXPOSE
 #EXPOSE 8000
 
-CMD gunicorn my_django_project.wsgi:application --bind=0:$PORT --access-logfile=- --error-logfile=-
+CMD gunicorn scrawl_be.wsgi:application --bind=0:$PORT --access-logfile=- --error-logfile=-
 EOF

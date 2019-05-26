@@ -6,10 +6,10 @@ setup:
     BUILDPACK_CLEAR_CACHE: '1'
     DISABLE_COLLECTSTATIC: '1'
 build:
+  docker:
+    web: Dockerfile
   packages:
     - gdal-bin
   languages:
     - 'https://github.com/dschep/heroku-geo-buildpack.git'
     - python
-run:
-  web: uwsgi --http 0:$PORT --wsgi-file ./config/wsgi.py --master --processes 4 --threads 2
