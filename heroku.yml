@@ -11,3 +11,5 @@ build:
   languages:
     - 'https://github.com/dschep/heroku-geo-buildpack.git'
     - python
+run:
+  web: uwsgi --http 0:$PORT --wsgi-file ./config/wsgi.py --master --processes 4 --threads 2
