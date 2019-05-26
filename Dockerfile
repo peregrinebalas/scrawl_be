@@ -6,11 +6,6 @@ WORKDIR /usr/src/app
 ENV DJANGO_SETTINGS_MODULE=scrawl_be.settings \
     PYTHONPATH=/usr/src/app SECRET_KEY=1 DATABASE_URL=
 
-# download GeoIP database
-RUN wget -qO- http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz \
-    | gunzip > /srv/GeoLite2-City.mmdb
-env GEOIP_PATH=/srv/GeoLite2-City.mmdb
-
 # debian packages: GeoDjango dependencies
 RUN apt-get update && \
     apt-get install -y binutils libproj-dev gdal-bin && \
