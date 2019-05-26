@@ -10,7 +10,8 @@ jobs: # A basic unit of work in a run
           PIPENV_VENV_IN_PROJECT: true
           DATABASE_URL: postgresql://root@localhost/scrawl_database?sslmode=disable
       # CircleCI PostgreSQL images available at: https://hub.docker.com/r/circleci/postgres/
-      - image: circleci/postgres:9.4
+      - image: wooyek/geodjango
+      - image: circleci/postgres:alpine-postgis-ram
         environment: # environment variables for the Postgres container.
           POSTGRES_USER: postgres
           POSTGRES_DB: scrawl_database
