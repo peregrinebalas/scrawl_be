@@ -5,7 +5,7 @@ from django.test import TestCase
 from django.utils import timezone
 from django.urls import reverse
 
-from rest_framework.test import APITestCase, APIClient
+from rest_framework.test import APITestCase, APIClient, APIRequestFactory
 from rest_framework.views import status
 
 from .models import Wall, Comment
@@ -90,6 +90,32 @@ class WallShowTests(APITestCase):
         self.assertEqual(response.status_code, 404)
         self.assertEqual(response.data['error'], "Could Not Find Wall")
 
+class CreateCommentTests(APITestCase):
+    def setUp(self):
+        self.turing = Wall.objects.create(
+            name='Turing School of Software & Design', lat=25.3454567, lng=90.1234567)
+
+        self.comment_1 = Comment.objects.create(
+            wall= self.turing, comment='Turing School is a place')
+
+        self.body = {"comment": "There's a Fish Monster"}
+
+    def test_it_post_to_a_specific_wall(self, *args):
+        self.assertEqual(self.turing.comment_set.count(), 1)
+        url = reverse('scrawls:comments-create', kwargs={"pk": self.turing.pk})
+        response = client.post(url, json.dumps(self.body), content_type='application/json')
+        self.assertEqual(self.turing.comment_set.count(), 2)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['message'], "Comment Saved!")
+
+    def test_it_cannot_post_to_a_specific_wall(self, *args):
+        self.assertEqual(self.turing.comment_set.count(), 1)
+        url = reverse('scrawls:comments-create', kwargs={"pk": 100})
+        response = client.post(url, json.dumps(self.body), content_type='application/json')
+        self.assertEqual(self.turing.comment_set.count(), 1)
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.data['error'], "Conflict!")
+
 class NearestWallsIndexTests(APITestCase):
 
     def setUp(self):
@@ -125,7 +151,13 @@ class NearestWallsIndexTests(APITestCase):
 
 class ModelTests(TestCase):
 
-    def test_it_exists(self):
+    def test_wall_exists(self):
         wall = Wall.objects.create(name='Wall', lat=3.5, lng=3.5)
         all = Wall.objects.all()
+        self.assertIs(all.count(), 1)
+
+    def test_comment_exists(self):
+        wall = Wall.objects.create(name='Wall', lat=3.5, lng=3.5)
+        comment = Comment.objects.create(wall=wall, comment='Comment')
+        all = Comment.objects.all()
         self.assertIs(all.count(), 1)

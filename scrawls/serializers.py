@@ -17,4 +17,4 @@ class WallsSerializer(serializers.ModelSerializer):
 class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ("comment")
+        fields = ("comment",)
