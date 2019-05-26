@@ -105,7 +105,7 @@ REST_FRAMEWORK = {
 }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
+# GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
