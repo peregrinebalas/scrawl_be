@@ -6,12 +6,12 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-requests = "*"
 django = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 gunicorn = "*"
+django-heroku = "*"
 
 [requires]
 python_version = "3.7"
