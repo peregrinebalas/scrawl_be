@@ -39,6 +39,13 @@ class CreateWall(generics.CreateAPIView):
 class WallIndex(generics.ListAPIView):
 
     def get(self, request, **kwargs):
+        for wall in Wall.objects.all():
+            for comment in wall.comments:
+                if timezone.now() >= comment.expires_at:
+                    comment.delete()
+            if (wall.comment_set.count() == 0):
+                wall.delete()
+                
         try:
             lat = float(request.query_params['lat'])
             lng = float(request.query_params['lng'])
@@ -52,7 +59,7 @@ class WallIndex(generics.ListAPIView):
             closest_walls = []
             for i in sorted_dists: closest_walls.append(walls[i])
             walls = []
-            for wall in closest_walls[0:5]:
+            for wall in closest_walls:
                 walls.append(WallsSerializer(wall).data)
             return Response(data=walls, status=status.HTTP_200_OK)
         except:
