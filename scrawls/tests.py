@@ -76,11 +76,16 @@ class WallShowTests(APITestCase):
         self.comment1 = Comment.objects.create(
             wall= self.turing, comment='Turing School is a place')
 
+        self.comment2 = Comment.objects.create(
+            wall= self.turing, comment='I am an old comment', expires_at=timezone.now())
+
     def test_it_can_get_a_specific_wall(self):
         url = reverse('scrawls:wall-show', kwargs={'pk': self.turing.pk})
         wall = Wall.objects.get(pk=self.turing.pk)
         serializer = WallSerializer(wall)
         response = client.get(url, content_type='application/json')
+        # validates old comment is deleted
+        self.assertEqual(wall.comment_set.count(), 1)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer.data)
 
