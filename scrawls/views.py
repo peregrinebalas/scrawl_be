@@ -1,5 +1,6 @@
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
+from django.utils import timezone
 
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -63,6 +64,9 @@ class WallShow(generics.RetrieveAPIView):
     def get(self, request, **kwargs):
         try:
             wall = Wall.objects.get(pk=kwargs['pk'])
+            for comment in wall.comments:
+                if timezone.now() >= comment.expires_at:
+                    comment.delete()
             return Response(data= WallSerializer(wall).data, status=status.HTTP_200_OK)
         except (KeyError, Wall.DoesNotExist):
             return Response(data= {"error": "Could Not Find Wall"}, status=status.HTTP_404_NOT_FOUND)
