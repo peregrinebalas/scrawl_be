@@ -11,6 +11,8 @@ django = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+channels = "*"
+channels-redis = "*"
 
 [requires]
 python_version = "3.7"
