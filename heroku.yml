@@ -11,6 +11,6 @@ build:
 release:
   image: web
   command:
-    - python manage.py migrate
+    - python manage.py migrate syncdb
 run:
   web: gunicorn -w 3 scrawl_be.wsgi:application -b 0.0.0.0:$PORT
