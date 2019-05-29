@@ -1,14 +1,10 @@
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
-
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import status
-
 from .serializers import WallsSerializer, CommentsSerializer, WallSerializer
-
 from .models import Wall, Comment
-
 
 class CreateWall(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)

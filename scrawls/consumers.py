@@ -1,25 +1,12 @@
 from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
-from scrawls.models import Comment
+from .models import Comment
 import json
 
 
 class ChatConsumer(WebsocketConsumer):
-
-    def get_messages(self, data):
-        print('get')
-        pass
-
-    def new_message(self, data):
-        print('new')
-        pass
-
-    commands = {
-        "get_messages": get_messages,
-        "new_message": new_message
-    }
-
     def connect(self):
+        breakpoint()
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
 
