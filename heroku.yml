@@ -8,9 +8,8 @@ setup:
 build:
   docker:
     web: Dockerfile
-release:
-  command:
-    - pipenv run python manage.py migrate
+release: pipenv run python manage.py migrate
   image: web
 run:
   web: gunicorn -w 3 scrawl_be.wsgi:application -b 0.0.0.0:$PORT
+  image: web
