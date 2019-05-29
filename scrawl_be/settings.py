@@ -93,9 +93,13 @@ WSGI_APPLICATION = 'scrawl_be.wsgi.application'
 # }
 import dj_database_url
 
+if 'DATABASE_URL' in os.environ:
+    if 'postgres' in os.environ['DATABASE_URL']:
+        os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'].replace('postgres', 'postgis')
+
 DATABASES = {}
-DATABASES['default'] = dj_database_url.config(default='POSTGIS_DB')
-# DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
+DATABASES['default'] = dj_database_url.config(default='DATABASE_URL')
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
