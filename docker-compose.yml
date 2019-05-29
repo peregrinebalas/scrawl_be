@@ -14,5 +14,7 @@ services:
       - .:/code
   db:
     image: mdillon/postgis
+    environment:
+      POSTGRES_DB: scrawl_database
     ports:
       - "5432:5432"
