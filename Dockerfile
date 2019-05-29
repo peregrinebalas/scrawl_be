@@ -29,9 +29,7 @@ COPY scrawls /code/scrawls
 COPY manage.py /code/manage.py
 
 # python packages
-RUN pip install pipenv
-COPY Pipfile Pipfile.lock /code/
-RUN pipenv install --system
-RUN pipenv install django
+COPY requirements.txt /code/
+RUN pip install -r requirements.txt
 
 CMD gunicorn scrawl_be.wsgi:application -b 0.0.0.0:$PORT
