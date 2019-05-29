@@ -76,11 +76,16 @@ class WallShowTests(APITestCase):
         self.comment1 = Comment.objects.create(
             wall= self.turing, comment='Turing School is a place')
 
+        self.comment2 = Comment.objects.create(
+            wall= self.turing, comment='I am an old comment', expires_at=timezone.now())
+
     def test_it_can_get_a_specific_wall(self):
         url = reverse('scrawls:wall-show', kwargs={'pk': self.turing.pk})
         wall = Wall.objects.get(pk=self.turing.pk)
         serializer = WallSerializer(wall)
         response = client.get(url, content_type='application/json')
+        # validates old comment is deleted
+        self.assertEqual(wall.comment_set.count(), 1)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer.data)
 
@@ -132,14 +137,34 @@ class NearestWallsIndexTests(APITestCase):
             name="Amante's", lat=25.0015001, lng=90.0000001)
         self.mrkt = Wall.objects.create(
             name="Milk Market", lat=25.0000001, lng=90.0015001)
+        self.oldcomments = Wall.objects.create(
+            name="No Comments", lat=20.0000001, lng=50.0015001)
+        self.comment_1 = Comment.objects.create(
+            wall=self.scott, comment="I'm a new comment")
+        self.comment_2 = Comment.objects.create(
+            wall=self.bsmnt, comment="I'm a new comment")
+        self.comment_3 = Comment.objects.create(
+            wall=self.union, comment="I'm a new comment")
+        self.comment_4 = Comment.objects.create(
+            wall=self.mca, comment="I'm a new comment")
+        self.comment_5 = Comment.objects.create(
+            wall=self.amante, comment="I'm a new comment")
+        self.comment_6 = Comment.objects.create(
+            wall=self.mrkt, comment="I'm a new comment")
+        self.comment_7 = Comment.objects.create(
+            wall=self.oldcomments, comment="I'm an old comment", expires_at=timezone.now())
+
 
     def test_it_returns_the_5_nearest_walls(self):
+        self.assertEqual(Wall.objects.all().count(), 7)
         url = reverse('scrawls:walls-nearest') + '?lat=25.0000002&lng=90.0000002'
-        walls = [self.bsmnt, self.mrkt, self.amante, self.union, self.mca]
+        walls = [self.bsmnt, self.mrkt, self.amante, self.union, self.mca, self.scott]
         serializer = []
         for wall in walls:
             serializer.append(WallsSerializer(wall).data)
         response = client.get(url, content_type='application/json')
+        # Validate walls with old / no comments are deleted
+        self.assertEqual(Wall.objects.all().count(), 6)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.data, serializer)
 
