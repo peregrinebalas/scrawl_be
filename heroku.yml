@@ -10,8 +10,6 @@ build:
     web: Dockerfile
 release:
   image: web
-  command:
-    - pipenv run python manage.py migrate
+  command: pipenv run python manage.py migrate
 run:
   web: gunicorn -w 3 scrawl_be.wsgi:application -b 0.0.0.0:$PORT
-  image: web
