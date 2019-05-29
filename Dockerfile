@@ -5,7 +5,8 @@ WORKDIR /code
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-
+ENV DJANGO_SETTINGS_MODULE=scrawl_be.settings
+ENV PYTHONPATH="$PYTHONPATH:/code"
 
 # download GeoIP database
 RUN wget -qO- http://geolite.maxmind.com/download/geoip/database/GeoLite2-City.mmdb.gz \
