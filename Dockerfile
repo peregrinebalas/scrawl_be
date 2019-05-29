@@ -35,4 +35,4 @@ COPY Pipfile Pipfile.lock /code/
 RUN pipenv install --system
 RUN pipenv install django
 
-CMD gunicorn scrawl_be.wsgi:application
+CMD gunicorn scrawl_be.wsgi:application -b 0.0.0.0:$PORT
