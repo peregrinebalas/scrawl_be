@@ -8,8 +8,8 @@ setup:
 build:
   docker:
     web: Dockerfile
-  # languages:
-  #   - 'https://github.com/dschep/heroku-geo-buildpack.git'
-  #   - python
+release:
+  command:
+    - pipenv run python manage.py migrate
 run:
-  web: pipenv run python manage.py migrate
+  web: gunicorn -w 3 scrawl_be.wsgi:application -b 0.0.0.0:$PORT
