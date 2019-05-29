@@ -1,4 +1,4 @@
-FROM django:latest
+FROM python:3
 
 RUN mkdir -p /code
 WORKDIR /code
