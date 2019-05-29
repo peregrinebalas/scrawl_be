@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'yarl_lle=h+ab%j(10rd3rn(*+k%l9v&38_&+*7fsn-bzifxx1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://scrawlr.herokuapp.com']
 
