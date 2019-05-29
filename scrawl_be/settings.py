@@ -81,10 +81,10 @@ WSGI_APPLICATION = 'scrawl_be.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'scrawl_database',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'db',
+        'NAME': 'd1csde8jt75uj2',
+        'USER': 'aedgvdoxdtrmmw',
+        'PASSWORD': 'cc09fd97472e9d0c74d7c70cb6ff607a25100240223d2c6bf9af75179e6ca61a',
+        'HOST': 'ec2-54-83-205-27.compute-1.amazonaws.com',
         'PORT': '5432',
         'TEST': {
             'NAME': 'scrawl_test_db'
