@@ -6,9 +6,10 @@ setup:
     BUILDPACK_CLEAR_CACHE: '1'
     DISABLE_COLLECTSTATIC: '1'
 build:
-  web: Dockerfile
-  languages:
-    - 'https://github.com/dschep/heroku-geo-buildpack.git'
-    - python
+  docker:
+    web: Dockerfile
+  # languages:
+  #   - 'https://github.com/dschep/heroku-geo-buildpack.git'
+  #   - python
 run:
   web: pipenv run python manage.py migrate

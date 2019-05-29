@@ -12,6 +12,7 @@ djangorestframework = "*"
 django-cors-headers = "*"
 gunicorn = "*"
 django-heroku = "*"
+pgcli = "*"
 
 [requires]
 python_version = "3.7"

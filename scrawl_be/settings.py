@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import django_heroku
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -26,7 +25,7 @@ SECRET_KEY = 'yarl_lle=h+ab%j(10rd3rn(*+k%l9v&38_&+*7fsn-bzifxx1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://scrawlr.herokuapp.com']
 
 
 # Application definition
@@ -85,10 +84,10 @@ DATABASES = {
         'NAME': 'scrawl_database',
         'USER': 'postgres',
         'PASSWORD': '',
-        'HOST': 'db',
+        'HOST': 'db_1',
         'PORT': '5432',
         'TEST': {
-            'NAME': 'scrawl_test_db'
+        'NAME': 'scrawl_test_db'
         }
     }
 }
@@ -144,4 +143,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+import django_heroku
 django_heroku.settings(locals())
