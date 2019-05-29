@@ -78,22 +78,20 @@ WSGI_APPLICATION = 'scrawl_be.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-#         'NAME': 'scrawl_database',
-#         'USER': 'postgres',
-#         'PASSWORD': '',
-#         'HOST': 'db',
-#         'PORT': '5432',
-#         'TEST': {
-#         'NAME': 'scrawl_test_db'
-#         }
-#     }
-# }
-import dj_database_url
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(default='DATABASE_URL')
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'scrawl_database',
+        'USER': 'postgres',
+        'PASSWORD': '',
+        'HOST': 'db',
+        'PORT': '5432',
+        'TEST': {
+        'NAME': 'scrawl_test_db'
+        }
+    }
+}
+
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (

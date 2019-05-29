@@ -13,7 +13,6 @@ django-cors-headers = "*"
 gunicorn = "*"
 django-heroku = "*"
 pgcli = "*"
-dj-database-url = "*"
 
 [requires]
 python_version = "3.7"
