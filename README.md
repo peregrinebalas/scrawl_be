@@ -2,6 +2,8 @@
 
 Hosted by Heroku at: https://scrawlr.herokuapp.com
 
+Scrawl's frontend repo can be found at: https://github.com/TomWilhoit/scrawl_fe
+
 As [Turing School of Software & Design](https://turing.io/)'s final group project in the backend program, we built an application in collaboration with the frontend program. This repository is the code base for the Django-based backend for the our application Scrawl. The backend handles requests to our postgres db with a postgis extension for geolocation-based queries.
 
 ## Python & Django Versions
