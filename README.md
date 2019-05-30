@@ -165,3 +165,8 @@ Request
     "error": "Conflict!"
 }
 ```
+
+### Contributors
+[Peregrine Balas](https://github.com/PeregrineReed)
+[Scott Thomas](https://github.com/smthom05)
+[Peregrine Balas](https://github.com/TomWilhoit)
