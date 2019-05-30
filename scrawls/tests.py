@@ -30,6 +30,7 @@ class PostWallTests(APITestCase):
         response = client.post(url, data=data, content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertEqual(response.data, {
+            'pk': 19,
             'name': 'The Basement',
             'lat': 25.3454567,
             'lng': 90.1234567,
