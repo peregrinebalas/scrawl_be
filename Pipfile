@@ -11,6 +11,7 @@ django = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+coverage = "*"
 
 [requires]
 python_version = "3.7"
