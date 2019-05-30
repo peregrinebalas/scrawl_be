@@ -11,6 +11,10 @@ As [Turing School of Software & Design](https://turing.io/)'s final group projec
 Python 3.7.3
 Django 2.2.1
 
+## Database Schema
+
+https://files.slack.com/files-pri/T029P2S9M-FJT1E0J9Y/screen_shot_2019-05-30_at_8.19.08_am.png
+
 ## Setup & Installation
 
 ### Database
@@ -45,7 +49,7 @@ to run all migrations to the database.
 
 ## API Endpoints
 
-###POST to Walls###
+### POST to Walls
 `https://scrawlr.herokuapp.com/api/v1/walls`
 
 Request
@@ -78,7 +82,7 @@ Request
 }
 ```
 
-###GET for Wall Show###
+### GET for Wall Show
 `https://scrawlr.herokuapp.com/api/v1/walls/:id`
 
 200 Response
@@ -104,7 +108,7 @@ Request
 }
 ```
 
-###GET for Nearest Walls Index###
+### GET for Nearest Walls Index
 `https://scrawlr.herokuapp.com/api/v1/walls/nearest?lat=39.7507827&lng=-104.9966852`
 
 200 Response
@@ -138,7 +142,7 @@ Request
 }
 ```
 
-###POST to Wall's Comments###
+### POST to Wall's Comments
 `https://scrawlr.herokuapp.com/api/v1/walls/:id/comments`
 
 Request
