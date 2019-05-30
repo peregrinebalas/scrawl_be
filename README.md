@@ -13,7 +13,7 @@ Django 2.2.1
 
 ## Database Schema
 
-https://files.slack.com/files-pri/T029P2S9M-FJT1E0J9Y/screen_shot_2019-05-30_at_8.19.08_am.png
+![https://files.slack.com/files-pri/T029P2S9M-FJT1E0J9Y/screen_shot_2019-05-30_at_8.19.08_am.png]
 
 ## Setup & Installation
 
