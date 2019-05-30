@@ -1,5 +1,7 @@
 # scrawl_be
 
+Hosted by Heroku at: https://scrawlr.herokuapp.com
+
 As [Turing School of Software & Design](https://turing.io/)'s final group project in the backend program, we built an application in collaboration with the frontend program. This repository is the code base for the Django-based backend for the our application Scrawl. The backend handles requests to our postgres db with a postgis extension for geolocation-based queries.
 
 ## Python & Django Versions
@@ -41,5 +43,115 @@ to run all migrations to the database.
 
 ## API Endpoints
 
+POST to Walls `https://scrawlr.herokuapp.com/api/v1/walls`
 
+Request
+```
+{
+  "name": "Your Wall's Name",
+  "lat": 39.7507827,
+  "lng": -104.9966852,
+  "comment": "Optional Comment"
+}
+```
 
+201 Response
+```
+{
+    "pk": 8,
+    "name": "Your Wall's Name",
+    "lat": 39.7507827,
+    "lng": -104.9966852,
+    "comments": [
+        "Optional Comment"
+    ]
+}
+```
+
+409 Response
+```
+{
+    "error": "Fields missing, could not save wall."
+}
+```
+
+GET for Wall Show `https://scrawlr.herokuapp.com/api/v1/walls/:id`
+
+200 Response
+```
+{
+    "pk": 8,
+    "name": "Your Wall's Name",
+    "lat": 39.7507827,
+    "lng": -104.9966852,
+    "comments": [
+        "Optional Comment",
+        "Second Comment",
+        "Third Comment",
+        "See the pattern?" 
+    ]
+}
+```
+
+404 Response
+```
+{
+    "error": "Could Not Find Wall"
+}
+```
+
+GET for Nearest Walls Index `https://scrawlr.herokuapp.com/api/v1/walls/nearest?lat=39.7507827&lng=-104.9966852`
+
+200 Response
+```
+[
+  {
+      "pk": 8,
+      "name": "Your Wall's Name",
+      "lat": 39.7507827,
+      "lng": -104.9966852
+  },
+  {
+      "pk": 7,
+      "name": "Farther Away Wall",
+      "lat": 39.8507827,
+      "lng": -105.9966852
+  },
+    {
+      "pk": 10,
+      "name": "Even Farther Away Wall",
+      "lat": 40.8507827,
+      "lng": -106.2466852
+  }
+]
+```
+
+404 Response
+```
+{
+    "error": "Cannot Locate Nearest Walls"
+}
+```
+
+POST to Wall's Comments `https://scrawlr.herokuapp.com/api/v1/walls/:id/comments`
+
+Request
+```
+{
+    "comment": "New comment"
+}
+```
+
+201 Response
+```
+{
+    "message": "Comment Saved!"
+}
+```
+
+409 Response
+```
+{
+    "error": "Conflict!"
+}
+```
