@@ -13,7 +13,7 @@ Django 2.2.1
 
 ## Postgis Database Schema
 
-![postgis schema](https://files.slack.com/files-pri/T029P2S9M-FJT1E0J9Y/screen_shot_2019-05-30_at_8.19.08_am.png)
+![postgis schema](Screen Shot 2019-05-30 at 8.19.08 AM.png)
 
 ## Setup & Installation
 
