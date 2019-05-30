@@ -11,9 +11,9 @@ As [Turing School of Software & Design](https://turing.io/)'s final group projec
 Python 3.7.3
 Django 2.2.1
 
-## Database Schema
+## Postgis Database Schema
 
-![https://files.slack.com/files-pri/T029P2S9M-FJT1E0J9Y/screen_shot_2019-05-30_at_8.19.08_am.png]
+![postgis schema](https://files.slack.com/files-pri/T029P2S9M-FJT1E0J9Y/screen_shot_2019-05-30_at_8.19.08_am.png)
 
 ## Setup & Installation
 
