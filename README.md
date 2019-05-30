@@ -13,7 +13,7 @@ Django 2.2.1
 
 ## Postgis Database Schema
 
-![postgis schema](https://lh3.googleusercontent.com/W1dMS84KvCdPuYFeGfpLA6SaATo616IU79AbbNTsa3nsXft_MriXEkEg5FCG4cVDrGWv3ib3E_Aezm0tuLyh0QlB-rRh-o1fl8A1oAn8h17iYcFfGfBUmfwZneiwl6CEVxQJZczxXvAxL5EAnW2L-GhvB2iMXrsTsRB-XtzFR1q9jd5sWQN0z0EtKztOHz5ZxNk4ZqT78bNkfNhTxKDmCB6_PWYJqo-s1oSm9WovZZy-wuKM2pxPaQ3waUL45eNq5rLPuPg4gXaxLpHnucQXgGL-OuEn5guIge2czEeAOsCSObRcwKJjnM02Ivc7AjCx7GEARRpZjudbpeZNkL0Uaqs0mO7BC1bKIo0XMj9JQQYDfKGTxC95HUqmT-0sBwdj-KhSPmXbtEQBiOOFWAWUabojE0SZ5MQvjSZ11EsxLacODvv_Ed9ZQieDXTux0OqWz6z5dxMIMeitrM56z_lewnI_8jP6ibPAXPDgFpC4-2iaDE6WIQ8jjSVssFsoJMV-IaekZI6_2WgcgXT5dWsmR9br_ZB_TFVm5eHlaDdq3nDEgeF0cbvMDeqSYW5KbdHCToqPxVbyMHbMe-0AmXlIrE18D3pTTzSUAHUDpsQXWVs6rltKIWf8EsN-rbYm5uYufx8mcVPC44xJARIYxYDMI1bZ5VPCRM8=w1078-h470-no)
+![postgis schema](/schema.png)
 
 ## Setup & Installation
 
@@ -96,7 +96,7 @@ Request
         "Optional Comment",
         "Second Comment",
         "Third Comment",
-        "See the pattern?" 
+        "See the pattern?"
     ]
 }
 ```
