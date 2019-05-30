@@ -43,7 +43,8 @@ to run all migrations to the database.
 
 ## API Endpoints
 
-POST to Walls `https://scrawlr.herokuapp.com/api/v1/walls`
+###POST to Walls###
+`https://scrawlr.herokuapp.com/api/v1/walls`
 
 Request
 ```
@@ -75,7 +76,8 @@ Request
 }
 ```
 
-GET for Wall Show `https://scrawlr.herokuapp.com/api/v1/walls/:id`
+###GET for Wall Show###
+`https://scrawlr.herokuapp.com/api/v1/walls/:id`
 
 200 Response
 ```
@@ -100,7 +102,8 @@ GET for Wall Show `https://scrawlr.herokuapp.com/api/v1/walls/:id`
 }
 ```
 
-GET for Nearest Walls Index `https://scrawlr.herokuapp.com/api/v1/walls/nearest?lat=39.7507827&lng=-104.9966852`
+###GET for Nearest Walls Index###
+`https://scrawlr.herokuapp.com/api/v1/walls/nearest?lat=39.7507827&lng=-104.9966852`
 
 200 Response
 ```
@@ -133,7 +136,8 @@ GET for Nearest Walls Index `https://scrawlr.herokuapp.com/api/v1/walls/nearest?
 }
 ```
 
-POST to Wall's Comments `https://scrawlr.herokuapp.com/api/v1/walls/:id/comments`
+###POST to Wall's Comments###
+`https://scrawlr.herokuapp.com/api/v1/walls/:id/comments`
 
 Request
 ```
