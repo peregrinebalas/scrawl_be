@@ -1,6 +1,7 @@
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
 from django.db.utils import IntegrityError
+from django.utils import timezone
 
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -64,6 +65,13 @@ class CreateWall(generics.CreateAPIView):
 class WallIndex(generics.ListAPIView):
 
     def get(self, request, **kwargs):
+        for wall in Wall.objects.all():
+            for comment in wall.comments:
+                if timezone.now() >= comment.expires_at:
+                    comment.delete()
+            if (wall.comment_set.count() == 0):
+                wall.delete()
+                
         try:
             lat = float(request.query_params['lat'])
             lng = float(request.query_params['lng'])
@@ -77,7 +85,7 @@ class WallIndex(generics.ListAPIView):
             closest_walls = []
             for i in sorted_dists: closest_walls.append(walls[i])
             walls = []
-            for wall in closest_walls[0:5]:
+            for wall in closest_walls:
                 walls.append(WallsSerializer(wall).data)
             return Response(data=walls, status=status.HTTP_200_OK)
         except:
@@ -89,6 +97,9 @@ class WallShow(generics.RetrieveAPIView):
     def get(self, request, **kwargs):
         try:
             wall = Wall.objects.get(pk=kwargs['pk'])
+            for comment in wall.comments:
+                if timezone.now() >= comment.expires_at:
+                    comment.delete()
             return Response(data= WallSerializer(wall).data, status=status.HTTP_200_OK)
         except (KeyError, Wall.DoesNotExist):
             return Response(data= {"error": "Could Not Find Wall"}, status=status.HTTP_404_NOT_FOUND)
