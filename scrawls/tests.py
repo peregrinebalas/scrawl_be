@@ -74,18 +74,44 @@ class PostWallTests(APITestCase):
             lng = 90.1234567
         )
         wall.comment_set.create(comment = 'Learn to code!')
-        data = json.dumps({
+        data1 = json.dumps({
             'name': 'Stacks on Stacks',
             'lat': 25.3454567 + 0.0014,
             'lng': 90.1234567 + 0.0015,
             'comment': 'the sub hub'
         })
+        data2 = json.dumps({
+            'name': 'Making Bank, Guaranteed',
+            'lat': 25.3454567 + 0.0015,
+            'lng': 90.1234567 + 0.0014,
+            'comment': 'stacks on stacks'
+        })
+        data3 = json.dumps({
+            'name': 'One Wall to Rule Them All',
+            'lat': 25.3454567 + 0.0015,
+            'lng': 90.1234567 + 0.0015,
+            'comment': 'lord of the bling'
+        })
+
         url = reverse('scrawls:walls-create')
 
-        response = client.post(url, data=data, content_type='application/json')
-        self.assertEqual(response.status_code, 409)
-        self.assertEqual(response.data, {
+        response1 = client.post(url, data=data1, content_type='application/json')
+        self.assertEqual(response1.status_code, 409)
+        self.assertEqual(response1.data, {
             "error": "Too close to another wall to create at your current location."
+        })
+        response2 = client.post(url, data=data2, content_type='application/json')
+        self.assertEqual(response2.status_code, 409)
+        self.assertEqual(response2.data, {
+            "error": "Too close to another wall to create at your current location."
+        })
+        response3 = client.post(url, data=data3, content_type='application/json')
+        self.assertEqual(response3.status_code, 201)
+        self.assertEqual(response3.data, {
+            'name': 'One Wall to Rule Them All',
+            'lat': 25.3469567,
+            'lng': 90.1249567,
+            'comments': ['lord of the bling']
         })
 
 class WallShowTests(APITestCase):
