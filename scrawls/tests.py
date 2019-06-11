@@ -41,19 +41,19 @@ class PostWallTests(APITestCase):
         data1 = json.dumps(
             {
                 'name': 'The Basement',
-                'lng': 90.1234567,
+                'lng': 90.1234567
             }
         )
         data2 = json.dumps(
             {
                 'name': 'The Basement',
-                'lat': 25.3454567,
+                'lat': 25.3454567
             }
         )
         data3 = json.dumps(
             {
                 'lat': 25.3454567,
-                'lng': 90.1234567,
+                'lng': 90.1234567
             }
         )
 
@@ -66,6 +66,27 @@ class PostWallTests(APITestCase):
         response3 = client.post(url, data=data3, content_type='application/json')
         self.assertEqual(response3.status_code, 409)
         self.assertEqual(response3.data, {'error': 'Fields missing, could not save wall.'})
+
+    def test_a_wall_cant_be_added_too_close_to_another_wall(self):
+        wall = Wall.objects.create(
+            name = 'The Basement',
+            lat = 25.3454567,
+            lng = 90.1234567
+        )
+        wall.comment_set.create(comment = 'Learn to code!')
+        data = json.dumps({
+            'name': 'Stacks on Stacks',
+            'lat': 25.3454567 + 0.0014,
+            'lng': 90.1234567 + 0.0015,
+            'comment': 'the sub hub'
+        })
+        url = reverse('scrawls:walls-create')
+
+        response = client.post(url, data=data, content_type='application/json')
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.data, {
+            "error": "Too close to another wall to create at your current location."
+        })
 
 class WallShowTests(APITestCase):
 
