@@ -1,6 +1,6 @@
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
-
+from django.db.utils import IntegrityError
 
 from rest_framework import generics, permissions
 from rest_framework.response import Response
@@ -25,36 +25,38 @@ class CreateWall(generics.CreateAPIView):
             near = False
             walls = Wall.order_by_dist(pnt)
             if len(walls) == 0:
-                wall = Wall.objects.create(
+                new_wall = Wall.objects.create(
                     name=name,
                     lat=lat,
                     lng=lng,
                 )
             else:
-                for w in walls:
-                    near = True if pnt and w.point.distance(pnt) >= 0.0015 else near
-                    if near:
+                for wall in walls:
+                    if pnt and round(wall.point.distance(pnt), 5) < 0.00212:
                         break
-                    elif w == walls[-1]:
-                        wall = Wall.objects.create(
+                    elif wall == walls[len(walls) - 1]:
+                        new_wall = Wall.objects.create(
                             name=name,
                             lat=lat,
                             lng=lng,
                         )
-                        breakpoint()
                     else:
                         continue
 
-            comment = wall.comment_set.create(
+            comment = new_wall.comment_set.create(
                 comment = request.data.get("comment", "")
             )
 
-            return Response(data=WallSerializer(wall).data, status=status.HTTP_201_CREATED)
+            return Response(data=WallSerializer(new_wall).data, status=status.HTTP_201_CREATED)
         except NameError:
             return Response(data={
                 "error": "Too close to another wall to create at your current location."
             }, status=status.HTTP_409_CONFLICT)
-        except django.db.utils.IntegrityError:
+        except IntegrityError:
+            return Response(data={
+                "error": "Fields missing, could not save wall."
+            }, status=status.HTTP_409_CONFLICT)
+        except TypeError:
             return Response(data={
                 "error": "Fields missing, could not save wall."
             }, status=status.HTTP_409_CONFLICT)
