@@ -5,7 +5,7 @@ WORKDIR /code
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
-ENV DJANGO_SETTINGS_MODULE=scrawl_be.production.settings
+ENV DJANGO_SETTINGS_MODULE=scrawl_be.prod_settings
 ENV PYTHONPATH=$PYTHONPATH:/code
 
 # download GeoIP database
