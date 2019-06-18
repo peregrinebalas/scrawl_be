@@ -6,11 +6,14 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-requests = "*"
 django = "*"
 psycopg2-binary = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+gunicorn = "*"
+django-heroku = "*"
+pgcli = "*"
+dj-database-url = "*"
 coverage = "*"
 
 [requires]

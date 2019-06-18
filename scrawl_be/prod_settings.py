@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'yarl_lle=h+ab%j(10rd3rn(*+k%l9v&38_&+*7fsn-bzifxx1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://scrawlr.herokuapp.com']
 
 
 # Application definition
@@ -77,20 +77,15 @@ WSGI_APPLICATION = 'scrawl_be.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
+import dj_database_url
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'scrawl_database',
-        'USER': 'postgres',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        'TEST': {
-            'NAME': 'scrawl_test_db'
-        }
-    }
-}
+if 'DATABASE_URL' in os.environ:
+    if 'postgres' in os.environ['DATABASE_URL']:
+        os.environ['DATABASE_URL'] = os.environ['DATABASE_URL'].replace('postgres', 'postgis')
+
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config(default='DATABASE_URL')
+DATABASES['default']['ENGINE'] = 'django.contrib.gis.db.backends.postgis'
 
 REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
@@ -105,7 +100,6 @@ REST_FRAMEWORK = {
 }
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-# GDAL_LIBRARY_PATH = os.environ.get('GDAL_LIBRARY_PATH')
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -124,7 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 CORS_ORIGIN_ALLOW_ALL = False
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8000'
+    'http://localhost:8000',
+    'https://scrawlr.herokuapp.com'
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
@@ -139,8 +134,9 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+import django_heroku
+django_heroku.settings(locals())

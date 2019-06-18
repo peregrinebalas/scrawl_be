@@ -1,0 +1,16 @@
+setup:
+  addons:
+    - plan: 'heroku-postgresql:hobby-dev'
+      as: db
+  config:
+    BUILDPACK_CLEAR_CACHE: '1'
+    DISABLE_COLLECTSTATIC: '1'
+build:
+  docker:
+    web: Dockerfile
+release:
+  image: web
+  command:
+    - python manage.py migrate
+run:
+  web: gunicorn -w 3 scrawl_be.wsgi:application -b 0.0.0.0:$PORT
