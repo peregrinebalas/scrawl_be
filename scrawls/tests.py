@@ -109,6 +109,7 @@ class PostWallTests(APITestCase):
         response3 = client.post(url, data=data3, content_type='application/json')
         self.assertEqual(response3.status_code, 201)
         self.assertEqual(response3.data, {
+            'pk': 21,
             'name': 'One Wall to Rule Them All',
             'lat': 25.3469567,
             'lng': 90.1249567,
