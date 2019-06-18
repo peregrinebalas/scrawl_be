@@ -1,5 +1,6 @@
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import Point
+from django.db.utils import IntegrityError
 from django.utils import timezone
 
 from rest_framework import generics, permissions
@@ -15,23 +16,48 @@ class CreateWall(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, *args, **kwargs):
-        name = request.data.get("name", "")
-        lat = request.data.get("lat", "")
-        lng = request.data.get("lng", "")
+        name = request.data.get("name", None)
+        lat = request.data.get("lat", None)
+        lng = request.data.get("lng", None)
+        pnt = Point(lng, lat, srid=4326) if lat and lng else None
+        comment = request.data.get("comment", None)
         try:
             name = null if name == "" else name
-            wall = Wall.objects.create(
-                name=name,
-                lat=lat,
-                lng=lng,
-            )
+            near = False
+            walls = Wall.order_by_dist(pnt)
+            if len(walls) == 0:
+                new_wall = Wall.objects.create(
+                    name=name,
+                    lat=lat,
+                    lng=lng,
+                )
+            else:
+                for wall in walls:
+                    if pnt and round(wall.point.distance(pnt), 5) < 0.00212:
+                        break
+                    elif wall == walls[len(walls) - 1]:
+                        new_wall = Wall.objects.create(
+                            name=name,
+                            lat=lat,
+                            lng=lng,
+                        )
+                    else:
+                        continue
 
-            comment = wall.comment_set.create(
+            comment = new_wall.comment_set.create(
                 comment = request.data.get("comment", "")
             )
 
-            return Response(data=WallSerializer(wall).data, status=status.HTTP_201_CREATED)
-        except:
+            return Response(data=WallSerializer(new_wall).data, status=status.HTTP_201_CREATED)
+        except NameError:
+            return Response(data={
+                "error": "Too close to another wall to create at your current location."
+            }, status=status.HTTP_409_CONFLICT)
+        except IntegrityError:
+            return Response(data={
+                "error": "Fields missing, could not save wall."
+            }, status=status.HTTP_409_CONFLICT)
+        except TypeError:
             return Response(data={
                 "error": "Fields missing, could not save wall."
             }, status=status.HTTP_409_CONFLICT)

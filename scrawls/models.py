@@ -1,7 +1,7 @@
 from django.contrib.gis.db import models
 from django.utils import timezone
 from django.contrib.gis.geos import Point
-# Create your models here.
+from django.contrib.gis.db.models.functions import Distance
 
 def expiration_date():
     return timezone.now() + timezone.timedelta(days=2)
@@ -15,6 +15,9 @@ class Wall(models.Model):
     def save(self, *args, **kwargs):
         self.point = Point(self.lng, self.lat)
         super(Wall, self).save(*args, **kwargs)
+
+    def order_by_dist(point):
+        return Wall.objects.annotate(distance=Distance('point', point))
 
     @property
     def comments(self):
