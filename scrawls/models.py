@@ -21,7 +21,7 @@ class Wall(models.Model):
 
     @property
     def comments(self):
-        return self.comment_set.all()
+        return self.comment_set.all().order_by('-created_at')
 
     def __str__(self):
         return self.name
