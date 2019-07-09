@@ -54,13 +54,13 @@ class ChatConsumer(WebsocketConsumer):
         data = json.loads(text_data)
         self.commands[data['command']](self, data)
 
-    def send_wall_comment(self, message):
+    def send_wall_comment(self, comment):
         # Send message to room group
         async_to_sync(self.channel_layer.group_send)(
             self.wall_group_pk,
             {
                 'type': 'wall_comment',
-                'message': message
+                'comment': comment
             }
         )
 
@@ -69,9 +69,8 @@ class ChatConsumer(WebsocketConsumer):
 
     # Receive message from room group
     def wall_comment(self, event):
-        message = event['message']
-
+        comment = event['comment']
         # Send message to WebSocket
         async_to_sync(self.send(text_data=json.dumps({
-            'message': message
+            'comment': comment
         })))
