@@ -6,11 +6,8 @@ from django.utils import timezone
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import status
-
 from .serializers import WallsSerializer, CommentsSerializer, WallSerializer
-
 from .models import Wall, Comment
-
 
 class CreateWall(generics.CreateAPIView):
     permission_classes = (permissions.AllowAny,)
@@ -71,7 +68,7 @@ class WallIndex(generics.ListAPIView):
                     comment.delete()
             if (wall.comment_set.count() == 0):
                 wall.delete()
-                
+
         try:
             lat = float(request.query_params['lat'])
             lng = float(request.query_params['lng'])
