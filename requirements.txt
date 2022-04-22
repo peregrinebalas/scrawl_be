@@ -5,7 +5,7 @@ configobj==5.0.6
 dj-database-url==0.5.0
 django-cors-headers==3.0.2
 django-heroku==0.3.1
-django==2.2.1
+django==2.2.28
 djangorestframework==3.9.4
 gunicorn==19.9.0
 humanize==0.5.1
